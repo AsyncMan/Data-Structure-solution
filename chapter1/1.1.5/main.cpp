@@ -1,3 +1,14 @@
+/*
+Write C functions add, subtract, and multiply that read two strings of 0s and 1s representing binary nonnegative integers,
+and print the string representing their sum, difference, and product, respectively.
+
+NOTE: A more simple solution to the probelm would be convert to base 10 and then do the operation and then convert back to 
+base 2 but I thought this would go aganist the spirit of the problem
+*/
+
+
+
+
 #include <cmath>
 #include <cstdint>
 #include <cstdlib>
@@ -33,6 +44,7 @@ uint64_t add(uint64_t x, uint64_t y){
         }
 
 
+        //NOTE: Same logic as a full adder
         sum += (xBit ^ yBit ^ carry) * pow(10, i++);
         carry = (xBit & yBit) | (xBit & carry) | (yBit & carry);
 
@@ -67,6 +79,7 @@ int64_t sub(uint64_t x, uint64_t y){
             printf_s("Error: %d isn't a valid binary number\n", y);
             exit(2);
         }
+        //NOTE: Same logic as full subtractor
         differenceInComplement += (xBit ^ yBit ^ carry) * pow(10, i);
         previousCarry = carry;
         carry = (xBit & yBit) | (xBit & carry) | (yBit & carry);
@@ -76,11 +89,11 @@ int64_t sub(uint64_t x, uint64_t y){
 
     }
     int lengthOfDifference = floor(log10(abs((long) differenceInComplement))) + 1; 
+    //NOTE:: A negative number will always have less digit than a positive one as it doesn't overflow
     if (maxLength + 1 == lengthOfDifference){
         int difference = 0;
         int bit = 0;
         for (int i = 0; i <= maxLength; i++) {
-            printf_s("difference: %d \t differenceInComplement: %d\n", difference, differenceInComplement);
             switch (differenceInComplement % 10) {
                 case 0:
                     bit = 1;
@@ -115,6 +128,15 @@ uint64_t mul(uint64_t x, uint64_t y){
         int product = 0;
         for (int j = 0; j < lengthOfY; j++){
             int yBit = tempY % 10;
+            if (xBit != 0 && xBit != 1){
+                printf_s("At add: Error: %d isn't a valid binary number\n", x);
+                exit (2);
+            }
+
+            if (yBit != 0 && yBit != 1){
+                printf_s("Error: %d isn't a valid binary number\n", y);
+                exit(2);
+            }
             product += (xBit & yBit) * pow(10, j);
             tempY /= 10;
         }

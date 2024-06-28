@@ -1,3 +1,3 @@
 @echo off
 
-cl -Zi main.cpp
+g++ main.cpp -o main
