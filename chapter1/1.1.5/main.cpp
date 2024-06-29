@@ -14,7 +14,6 @@ base 2 but I thought this would go aganist the spirit of the problem
 #include <cstdlib>
 #include <math.h>
 #include <stdlib.h>
-#include <cstring>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -146,6 +145,7 @@ uint64_t mul(uint64_t x, uint64_t y){
 
     return sumOfProduct;
 }
+
 int main(int argc = {},  char **argv = {}){
     if (argc != 4){
         fprintf_s(stderr, "The format is <num1> <operator> <num2>\n");
@@ -159,7 +159,7 @@ int main(int argc = {},  char **argv = {}){
     uint64_t num2 = strtol(argv[3], &endP2, 10);
 
     if (errno == LONG_MAX || errno == LONG_MIN){
-        fprintf_s(stderr, "Error %s", strerror(errno));
+        printf_s("Not a valid number");
         exit(2);
     }
 
